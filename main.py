@@ -81,19 +81,23 @@ with mp_pose.Pose(
 
         if results.pose_landmarks:
             with open('data.txt', 'w') as outfile:
+                data = []
                 for i in range(32):
                     coord = results.pose_landmarks.landmark[i]
                     print(' '.join(['( ', str(coord.x), ' , ', str(coord.y), ' , ', str(coord.z), ' )']))
-
                     dataOutput = {
-                        "x": coord.x,
-                        "y": coord.y,
-                        "z": coord.z
+                        "bone":{
+
+                            "boneID": i,
+                            "x": coord.x,
+                            "y": coord.y,
+                            "z": coord.z
+
+                        }
                     }
                     jasonOutput = json.dumps(dataOutput)
-
-                    json.dump(dataOutput, outfile)
-                    print(json.dumps(dataOutput))
+                    json.dump(dataOutput, outfile, indent = 2)
+                    print(jasonOutput)
         # Flip the image horizontally for a selfie-view display.
         cv2.imshow('MediaPipe Pose', cv2.flip(image, 1))
         if cv2.waitKey(5) & 0xFF == 27:
