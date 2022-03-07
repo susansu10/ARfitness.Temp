@@ -33,11 +33,14 @@ with mp_pose.Pose(
         if results.pose_landmarks:
             with open('data.txt', 'w') as outfile:
                 wholeBodyCoordinate = []
+                x = (results.pose_landmarks.landmark[11].x + results.pose_landmarks.landmark[12].x)/2
+                y = (results.pose_landmarks.landmark[11].y + results.pose_landmarks.landmark[12].y)/2
+                z = (results.pose_landmarks.landmark[11].z + results.pose_landmarks.landmark[12].z)/2
                 for i in range(33):
                     coord = results.pose_landmarks.landmark[i]
                     oneBone = {
                         "boneID": i,
-                        "coord":[coord.x,coord.y, coord.z]
+                        "coord":[-(x - coord.x), (y-coord.y), (z-coord.z)]
                     }
                     wholeBodyCoordinate.append(oneBone)
                 jasonOutput = json.dumps(wholeBodyCoordinate)
