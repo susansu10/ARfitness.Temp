@@ -19,6 +19,7 @@ with mp_pose.Pose(
         # pass by reference.
         #image.flags.writeable = False
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = cv2.resize(image, None, fx=2, fy=3, interpolation=cv2.INTER_AREA)
         results = pose.process(image)
         # 劃出相關的點在圖片上
         image.flags.writeable = True
